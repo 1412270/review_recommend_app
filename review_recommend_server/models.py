@@ -153,3 +153,13 @@ class SpokenLanguages(models.Model):
     class Meta:
         managed = False
         db_table = 'spoken_languages'
+
+
+class Comments(models.Model):
+    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+    movie = models.ForeignKey('Movies', models.DO_NOTHING, blank=True, null=True)
+    comment = models.CharField(max_length=1000, blank=True, null=True)
+    create_time = models.CharField(max_length=1000, blank=True, null=True)
+
+    class Meta:
+        db_table = 'comments'

@@ -7,7 +7,8 @@ from rest_framework_simplejwt.views import (
 )
 
 router = routers.DefaultRouter()
-router.register('movies', views.MoviesViewSet, 'movie')
+router.register('movies', views.MoviesViewSet, 'movies')
+router.register('movie', views.MovieDetailViewSet, 'movie')
 router.register('users', views.UserViewSet, 'user')
 
 urlpatterns = [

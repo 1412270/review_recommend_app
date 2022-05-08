@@ -1,14 +1,12 @@
+import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import generics, viewsets, status, permissions
 from rest_framework.decorators import api_view, action, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-import requests
-
 from .models import Movies, User
-from .serializers import MovieSerializer, UserSerializer
+from .serializers import MoviesSerializer, UserSerializer, MovieDetailSerializer
 from django.conf import settings
 
 
@@ -20,14 +18,18 @@ def home(request):
 #
 class MoviesViewSet(viewsets.ViewSet, generics.ListAPIView):
     queryset = Movies.objects.all()[:6]
-    serializer_class = MovieSerializer
+    serializer_class = MoviesSerializer
 
     @api_view(['GET'])
     def get_movies(self, request):
-        return Response(MovieSerializer.data)
+        return Response(MoviesSerializer.data)
 
 
-#
+class MovieDetailViewSet(viewsets.ViewSet, generics.RetrieveAPIView):
+    queryset = Movies.objects.all()
+    serializer_class = MovieDetailSerializer
+
+
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.ListAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
